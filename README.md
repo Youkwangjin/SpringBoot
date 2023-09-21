@@ -1,3 +1,4 @@
 # SpringBoot
 
-Spring Boot Web MyBatis(XML, ANNOTATION)
+Spring Boot Web MVC 패턴
+MyBatis(XML, ANNOTATION) 사용 
