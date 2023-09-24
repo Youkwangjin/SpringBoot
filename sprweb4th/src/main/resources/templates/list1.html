@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<!-- 자바 Templates의 일종이다  -->
+우리가 아는 HTML이 아니라 thymeleaf 문서이다.<br/>
+메세지 : <span th:text="${msg}">이 영역의 텍스트는 순수 HTML에서는 보이지만 thymeleaf 서식을 적용하면 무시된다.(보이지 않는다)</span>
+<hr/>
+메세지(인라인 처리 - text영역의 변수를 설정(기술)한다.) : <span>[[${msg2}]]</span>
+<hr/>
+값 결합 (+를 사용한다 문자열 결합이니까) : <span th:text="'메세지는 ' + ${msg} + '입니다.'"></span>
+<hr/>
+값 결합 (리터럴 치환사용) : <span th:text="|메세지는 ${msg} 입니다.|">"|문자열|" 형태 사용</span>
+<hr/>
+지역 변수 사용 :
+<span th:with="kor=90,eng=80">
+	<b th:text="|${kor} + ${eng} = ${kor + eng}|">변수는 span tag 내에서만 유효하다.</b>
+</span>
+<hr/>
+관계연산자 비교해보기<br/><br/>
+<span th:text="3 >= 4"></span><br/>
+<span th:text="3 < 4"></span><br/>
+<span th:text="3 == 4"></span><br/>
+<span th:text="3 != 4"></span><br/>
+<hr/>
+조건 연산(if, unless)
+<span th:text="5 > 4?'크구나':'어라 작아요'"></span>
+<hr/>
+조건 연산(true) : 
+<span th:if="5 > 4">
+	<b>조건이 참일 때 수행(if문 사용)</b>
+</span>
+<hr/>
+조건 연산(false) :
+<span th:unless="4 > 4">
+	<b>조건이 거짓일 때 수행 (unless문 사용)</b>
+</span>
+<hr/>
+switch 조건 연산(false) : 
+<div th:switch="${msg2}">
+	<b th:case="한국인" th:text="|${msg2}님|"></b>
+	<i th:case="길동" th:text="|${msg2}씨|"></i>
+	<strong style="color: red;" th:case="*">누구세용</strong>
+</div>
+<hr/>
+Dto 자료 출력 방법1<br/>
+<span th:text="${sangpum.code}">sangpum.getCode()를 의미한다.</span> <!-- getCode를 부른거임! -->
+<span>[[${sangpum.sang}]]</span><br/>
+<span>[[${sangpum.price}]]</span><br/>
+<hr/>
+Dto 자료 출력 방법2
+<div th:object="${sangpum}"> <!-- 참조 기법 중 th:object 사용도 가능하다 -->
+	<span th:text="*{code}">자식요소 에서 *{필드Getter}</span><br/>
+	<span th:text="*{sang}"></span><br/>
+	<span th:text="*{['sang']}"></span><br/>
+	<span>[[*{['price']}]]</span>
+</div>
+<hr/>
+<div th:text="${sangpums[0]}"></div>
+<div th:text="${sangpums[1]}"></div>
+<hr/>
+컬랙션 반복처리
+<table border="1">
+	<tr>
+		<th>코드</th>
+		<th>품명</th>
+		<th>가격</th>
+	</tr>
+	<tr th:each="s:${sangpums}">
+		<td>[[${s.code}]]</td>
+		<td>[[${s.sang}]]</td>
+		<td>[[${s.price}]]</td>
+	</tr>
+</table>
+</body>
+</html>
