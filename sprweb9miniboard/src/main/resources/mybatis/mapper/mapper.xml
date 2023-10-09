@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- XML 의존적인 방법  -->
+<mapper namespace="pack.model.DataMappingInter">
+	<select id = "selectList" resultType="pack.model.Board">
+		select * from springboard order by num desc; 
+	</select>
+	
+	<insert id="insert" parameterType="pack.controller.BoardBean">
+		insert into springboard(num,title,author,content,bwrite,readcnt)
+		<!-- 서브쿼리 사용시 동일 컬럼명을 작성할 때 별명을 적어줘야 한다. -->
+		values((select max(num) + 1 from springboard ali),#{author},#{title},#{content},now(),0)
+	</insert>
+	
+	<select id = "selectSearch" parameterType="pack.controller.BoardBean" resultType="pack.model.Board">
+		select * from springboard
+		where ${searchName} like concat('%',#{searchValue},'%')
+		order by num desc
+	</select>
+	
+	<!-- 게시물 상세보기를 위한 SQL 쿼리문 -->
+	<select id="selectOne" parameterType="string" resultType="pack.model.Board">
+		select * from springboard where num=#{num}
+	</select>
+	
+	<update id="updateReadcnt" parameterType="string">
+		update springboard set readcnt=readcnt + 1 where num=#{num}
+	</update>
+	
+	<update id="update" parameterType="pack.controller.BoardBean">
+		update springboard set author=#{author},title=#{title},content=#{content}
+		where num=#{num}
+	</update>
+	
+	<delete id="delete" parameterType="string">
+		delete from springboard where num=#{num}
+	</delete>
+</mapper>
