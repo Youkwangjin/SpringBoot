@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta charset="UTF-8">
+<title>list</title>
+</head>
+<body>
+<h3>상품 정보 (@MVC : MyBatis)</h3>
+<table border="1">
+	<tr>
+		<th>코드</th>
+		<th>품명</th>
+		<th>수량</th>
+		<th>단가</th>
+	</tr>
+	<th:block th:if="${datas.size > 0}">
+	<tr th:each="data:${datas}">
+		<td>[[${data.code}]]</td>
+		<td>[[${data.sang}]]</td>
+		<td>[[${data.su}]]</td>
+		<td>[[${#numbers.formatInteger(data.dan, 3, 'COMMA')}]]</td>	
+	</tr>
+	<tr>
+		<!--
+		<td colspan="4" th:text="${datas.size}">건수</td>
+		-->
+		<td colspan="4">건수 : [[${datas.size}]]</td>
+	</tr>
+	
+	<!-- 상품명 별 검색 추가 -->
+	<tr>
+		<td colspan="4">
+			<form action="/search" method="get">
+				상품명 : <input type="text" name="searchValue">
+				<input type="submit" value="검 색" />
+			</form>
+		</td>
+	</tr>
+	</th:block>
+</table>
+</body>
+</html>
