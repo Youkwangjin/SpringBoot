@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>show</title>
+</head>
+<body>
+<!-- 세션 키 값 유지 -->
+<div th:if="${session.name} != null">
+	<a href="logout">로그아웃</a>
+<br/>
+<br/>
+** 직원 자료 **<p/>
+<table border="1">
+	<tr>
+		<td>사번</td><td>직원명</td><td>직급</td><td>성별</td><td>부서</td>
+	</tr>
+	<th:block th:each="j:${list}">
+		<tr>
+			<td>[[${j.jikwon_no}]]</td>
+			<td>[[${j.jikwon_name}]]</td>
+			<td>[[${j.jikwon_jik}]]</td>
+			<td>[[${j.jikwon_gen}]]</td>
+			<td>[[${j.buser_name}]]</td>
+		</tr>
+	</th:block>
+	
+	
+</table>
+</div>
+</body>
+</html>
